@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daily Carbon Footprint Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; 
+        margin: 40px;
+        background-color: #fafafa;
+        color: #0f8004; 
+        max-width: 400px;
+        justify-content: center;
+        margin: auto; 
+        background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
+        background-size: cover;
+        background-position: center; 
+        background-attachment: fixed; }
+     .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 700px;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    label { display: block; 
+        margin-top: 10px; 
+        font-weight: bold; 
+        color: #0f8004; 
+        font-size: 16px; 
+        justify-content: center;
+        text-align: center; }
+    input { padding: 5px;
+        margin-top: 9px; }
+    button { margin-top: 15px; 
+        padding: 8px 15px; 
+        margin-top: 20px; 
+        font-weight: bold; 
+        border: none;
+        justify-content: center;}
+    .result { margin-top: 20px; font-weight: medium; }
+  </style>
+</head>
+<body>
+    <div class=container>
+  <h1>Daily Carbon Footprint Calculator</h1>
+
+  <label>
+    Số điện đã dùng trong ngày (kWh):
+    <input type="number" id="electricity" placeholder="e.g. 250">
+  </label>
+
+  <label>
+    Khoảng đường đã di chuyển (km):
+    <input type="number" id="travel" placeholder="e.g. 100">
+  </label>
+
+  <label>
+    Khoảng đường đã di chuyển bằng xe bus (km):
+        <input type="number" id="bus" placeholder= "e.g. 50">
+  </label>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <div class="result" id="result"></div>
+    <h2>Ăn gì chưa người đẹp</h2>  
+  <script>
+    function calculate() {
+      let electricity = parseFloat(document.getElementById('electricity').value) || 0;
+      let travel = parseFloat(document.getElementById('travel').value) || 0;
+      let bus = parseFloat(document.getElementById('bus').value) || 0;
+
+      // Example emission factors (average):
+      let elecFactor = 0.058;  // kg CO₂ / kWh
+      let carFactor = 0.21;   // kg CO₂ / km bằng xe máy
+      let busFactor = 0.05;   // kg CO₂ / km by bus (trong xe có 30 ghế)
+
+      let footprint = (electricity * elecFactor) + (travel * carFactor) + (bus * busFactor);
+        if (footprint < 0) {
+            document.getElementById('result').textContent =
+              "Error: Carbon footprint không được bé hơn 0.";
+        }else{
+      document.getElementById('result').textContent =
+        `Your estimated carbon footprint: ${footprint.toFixed(2)} kg CO₂`;
+        }
+    }
+  </script>
+  
+</body>
+</html>
